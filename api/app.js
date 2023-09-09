@@ -2,9 +2,13 @@ const express = require('express')
 const app = express()
 const redirectRoute = require('./routes/redirect')
 const shortenRoute = require('./routes/shorten')
+const fetchRoute = require('./routes/fetch')
 const mongoose = require('mongoose')
+let cors = require('cors')
 
-
+app.use(cors({
+    origin: '*'
+}));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -20,6 +24,7 @@ mongoose.connection.on('connected', function() {
 
 // Routes
 app.use('/shorten', shortenRoute)
+app.use('/fetch', fetchRoute)
 app.use('/', redirectRoute)
 
 

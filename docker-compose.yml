@@ -9,8 +9,20 @@ services:
       - "27017:27017"
   #Node API service
   api: 
-    build: .
+    build: 
+      context: ./api/
+    expose:
+      - 3001
     ports: 
       - "3001:3001"
     depends_on:
       - mongo
+  client:
+    build:
+      context: ./client/
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+    links:
+      - api
